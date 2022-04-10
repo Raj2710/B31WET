@@ -2,7 +2,7 @@ import React from 'react'
 
 function AllStudents() {
   return (
-    <div>AllStudentss</div>
+    <div>AlllStudents</div>
   )
 }
 
