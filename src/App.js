@@ -4,6 +4,9 @@ import Dashboard from './components/Dashboard';
 import AllStudents from './components/AllStudents';
 import AddStudent from './components/AddStudent';
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useState } from 'react';
+import EditStudents from './components/EditStudents';
 
 function App() {
   let data = {
@@ -13,6 +16,22 @@ function App() {
     pending:26
 
   }
+
+  let [students,setStudents] = useState([
+    {
+      name:"Naga",
+      email:"naga@gmail.com",
+      mobile:"123123123",
+      batch:"B20",
+      status:true
+    },
+    {
+      name:"Raj",
+      email:"raj@gmail.com",
+      mobile:"32154987",
+      batch:"B31"
+    }
+  ]);
   return <>
     <Router>
       <div style={{display:"grid", gridTemplateColumns:"15% 85%"}}>
@@ -22,8 +41,9 @@ function App() {
         <div>
           <Routes>
               <Route path = '/dashboard' element={<Dashboard data={data}/>}/>
-              <Route path = '/all-students' element = {<AllStudents/>}/>
-              <Route path = '/add-student' element = {<AddStudent/>}/>
+              <Route path = '/all-students' element = {<AllStudents data={{students,setStudents}}/>}/>
+              <Route path = '/add-student' element = {<AddStudent data={{students,setStudents}}/>}/>
+              <Route path = '/edit-student/:id' element = {<EditStudents data={{students,setStudents}}/>}/>
               <Route path = '*' element={<Dashboard data={data}/>}/>
           </Routes>
         </div>
