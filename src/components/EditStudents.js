@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import {useNavigate,useParams} from 'react-router-dom';
+import { StudentContext } from '../App';
 
 function EditStudents(props) {
     let params = useParams();
-
+  let context = useContext(StudentContext)
   let [name,setName]= useState(props.data.students[params.id].name);
   let [batch,setBatch]= useState(props.data.students[params.id].batch);
   let [mobile,setMobile]= useState(props.data.students[params.id].mobile);
@@ -23,7 +24,7 @@ function EditStudents(props) {
       email,
       status
     }
-    props.data.students.splice(params.id,1,data)
+    context.students.splice(params.id,1,data)
     navigate('/all-students')
   }
 

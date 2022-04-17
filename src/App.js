@@ -5,8 +5,9 @@ import AllStudents from './components/AllStudents';
 import AddStudent from './components/AddStudent';
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import EditStudents from './components/EditStudents';
+export const StudentContext = React.createContext();
 
 function App() {
   let data = {
@@ -39,13 +40,15 @@ function App() {
           <SideBar/>
         </div>
         <div>
-          <Routes>
-              <Route path = '/dashboard' element={<Dashboard data={data}/>}/>
-              <Route path = '/all-students' element = {<AllStudents data={{students,setStudents}}/>}/>
-              <Route path = '/add-student' element = {<AddStudent data={{students,setStudents}}/>}/>
-              <Route path = '/edit-student/:id' element = {<EditStudents data={{students,setStudents}}/>}/>
-              <Route path = '*' element={<Dashboard data={data}/>}/>
-          </Routes>
+          <StudentContext.Provider value={{students,setStudents}}>
+            <Routes>
+                <Route path = '/dashboard' element={<Dashboard data={data}/>}/>
+                <Route path = '/all-students' element = {<AllStudents/>}/>
+                <Route path = '/add-student' element = {<AddStudent data={{students,setStudents}}/>}/>
+                <Route path = '/edit-student/:id' element = {<EditStudents data={{students,setStudents}}/>}/>
+                <Route path = '*' element={<Dashboard data={data}/>}/>
+            </Routes>
+          </StudentContext.Provider>
         </div>
       </div>
     </Router>

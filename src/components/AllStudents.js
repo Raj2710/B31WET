@@ -1,17 +1,21 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from 'react-router-dom';
-
-function AllStudents(props) {
-  let [stu,setStu] = useState(props.data.students);
+import {StudentContext} from '../App'
+function AllStudents() {
+  let context = useContext(StudentContext);
 
   let navigate = useNavigate();
   let handleDelete = (i)=>{
-    let arr = props.data.students;
-    arr.splice(i,1);
-    console.log(arr)
-    props.data.setStudents(arr)//this is an issue component is not renderring
+    let newArray = [...context.students]
+    newArray.splice(i,1);
+    context.setStudents(newArray)
+    
+    // let arr = props.data.students;
+    // arr.splice(i,1);
+    // console.log(arr)
+    // props.data.setStudents(arr)//this is an issue component is not renderring because of shallow copy
   }
   return <>
     <Table striped bordered hover>
@@ -28,7 +32,7 @@ function AllStudents(props) {
   </thead>
   <tbody>
       {
-        stu.map((e,i)=>{
+        context.students.map((e,i)=>{
           return <tr key={i}>
             <td>{i+1}</td>
             <td>{e.name}</td>
