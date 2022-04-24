@@ -5,9 +5,9 @@ import AllStudents from './components/AllStudents';
 import AddStudent from './components/AddStudent';
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React,{ useState } from 'react';
+import React from 'react';
 import EditStudents from './components/EditStudents';
-export const StudentContext = React.createContext();
+export const url = 'https://61ee1f7ed593d20017dbac50.mockapi.io/students'
 
 function App() {
   let data = {
@@ -18,21 +18,6 @@ function App() {
 
   }
 
-  let [students,setStudents] = useState([
-    {
-      name:"Naga",
-      email:"naga@gmail.com",
-      mobile:"123123123",
-      batch:"B20",
-      status:true
-    },
-    {
-      name:"Raj",
-      email:"raj@gmail.com",
-      mobile:"32154987",
-      batch:"B31"
-    }
-  ]);
   return <>
     <Router>
       <div style={{display:"grid", gridTemplateColumns:"15% 85%"}}>
@@ -40,15 +25,13 @@ function App() {
           <SideBar/>
         </div>
         <div>
-          <StudentContext.Provider value={{students,setStudents}}>
             <Routes>
                 <Route path = '/dashboard' element={<Dashboard data={data}/>}/>
                 <Route path = '/all-students' element = {<AllStudents/>}/>
-                <Route path = '/add-student' element = {<AddStudent data={{students,setStudents}}/>}/>
-                <Route path = '/edit-student/:id' element = {<EditStudents data={{students,setStudents}}/>}/>
+                <Route path = '/add-student' element = {<AddStudent/>}/>
+                <Route path = '/edit-student/:id' element = {<EditStudents/>}/>
                 <Route path = '*' element={<Dashboard data={data}/>}/>
             </Routes>
-          </StudentContext.Provider>
         </div>
       </div>
     </Router>

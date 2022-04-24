@@ -1,11 +1,13 @@
-import React, { useState,useContext } from 'react'
+import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from 'react-router-dom';
-import {StudentContext} from '../App'
+import axios from 'axios';
+import {url} from '../App';
 function AddStudent() {
 
-  let context = useContext(StudentContext);
+  
+
   let [name,setName]= useState("");
   let [batch,setBatch]= useState("");
   let [mobile,setMobile]= useState("");
@@ -13,15 +15,26 @@ function AddStudent() {
   let [status,setStatus]= useState(true);
   let navigate = useNavigate();
 
-  let handleSubmit = ()=>{
-    let data = {
+  // useEffect(()=>{
+  //   console.log("Use Effect triggered");
+  // },[])
+
+  // useEffect(()=>{
+  //   console.log("Use Effect triggered");
+  // })
+
+  // useEffect(()=>{
+  //   console.log("Use Effect triggered");
+  // },[name,mobile])
+
+  let handleSubmit = async()=>{
+    await axios.post(url,{
       name,
       batch,
       mobile,
       email,
       status
-    }
-    context.setStudents([...context.students,data])
+    })
     navigate('/all-students')
   }
 

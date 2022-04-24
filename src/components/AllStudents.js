@@ -1,21 +1,27 @@
-import React,{useState,useContext} from 'react'
+import React,{useState,useEffect} from 'react'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from 'react-router-dom';
-import {StudentContext} from '../App'
+import axios from 'axios';
+import {url} from '../App';
 function AllStudents() {
-  let context = useContext(StudentContext);
+
+  let [students,setStudents]=useState([]);
+  
+  useEffect(()=>{
+    getData();
+  },[])
+
+  let getData = async()=>{
+    let res = await axios.get(url)
+    setStudents(res.data)
+  }
 
   let navigate = useNavigate();
-  let handleDelete = (i)=>{
-    let newArray = [...context.students]
-    newArray.splice(i,1);
-    context.setStudents(newArray)
-    
-    // let arr = props.data.students;
-    // arr.splice(i,1);
-    // console.log(arr)
-    // props.data.setStudents(arr)//this is an issue component is not renderring because of shallow copy
+
+  let handleDelete = async(id)=>{
+    await axios.delete(url+`/${id}`);
+    getData();
   }
   return <>
     <Table striped bordered hover>
@@ -32,19 +38,19 @@ function AllStudents() {
   </thead>
   <tbody>
       {
-        context.students.map((e,i)=>{
-          return <tr key={i}>
-            <td>{i+1}</td>
+        students.map((e,i)=>{
+          return <tr key={e.id}>
+            <td>{e.id}</td>
             <td>{e.name}</td>
             <td>{e.email}</td>
             <td>{e.mobile}</td>
             <td>{e.batch}</td>
             <td>{e.status?<p style={{color:"green"}}>Active</p>:<p style={{color:"red"}}>Inactive</p>}</td>
             <td>
-              <Button variant ='primary' onClick={()=>navigate('/edit-student/'+i)}>Edit</Button>
+              <Button variant ='primary' onClick={()=>navigate('/edit-student/'+e.id)}>Edit</Button>
               &nbsp;
               &nbsp;
-              <Button variant ='danger' onClick={()=>handleDelete(i)}>Delete</Button>
+              <Button variant ='danger' onClick={()=>handleDelete(e.id)}>Delete</Button>
             </td>
           </tr>
         })
@@ -55,3 +61,8 @@ function AllStudents() {
 }
 
 export default AllStudents
+
+// useEffect(()=>{
+  //   console.log("Component Rendered")
+  // })// It will be triggered for all state changes ---> whenever a state is changed component will be rendered. So UseEffect
+  //qithout dependanci array will triggered everytime a component renders

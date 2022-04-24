@@ -1,30 +1,43 @@
-import React, { useState,useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import {useNavigate,useParams} from 'react-router-dom';
-import { StudentContext } from '../App';
+import axios from 'axios';
+import {url} from '../App'
 
-function EditStudents(props) {
+function EditStudents() {
     let params = useParams();
-  let context = useContext(StudentContext)
-  let [name,setName]= useState(props.data.students[params.id].name);
-  let [batch,setBatch]= useState(props.data.students[params.id].batch);
-  let [mobile,setMobile]= useState(props.data.students[params.id].mobile);
-  let [email,setEmail]= useState(props.data.students[params.id].email);
-  let [status,setStatus]= useState(props.data.students[params.id].status);
+  let [name,setName]= useState("");
+  let [batch,setBatch]= useState("");
+  let [mobile,setMobile]= useState("");
+  let [email,setEmail]= useState("");
+  let [status,setStatus]= useState("");
 
+
+  useEffect(()=>{
+    getData();
+  },[])
+
+  let getData = async()=>{
+    let res = await axios.get(`${url}/${params.id}`)
+    console.log(res.data)
+    setName(res.data.name)
+    setBatch(res.data.batch)
+    setMobile(res.data.mobile)
+    setEmail(res.data.email)
+    setStatus(res.data.status)
+  }
 
   let navigate = useNavigate();
 
-  let handleSubmit = ()=>{
-    let data = {
+  let handleSubmit = async()=>{
+    await axios.put(`${url}/${params.id}`,{
       name,
       batch,
       mobile,
       email,
       status
-    }
-    context.students.splice(params.id,1,data)
+    })
     navigate('/all-students')
   }
 
