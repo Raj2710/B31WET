@@ -58,6 +58,45 @@ function SideBar() {
         {/* <!-- Divider --> */}
         <hr className="sidebar-divider"/>
 
+        <div className="sidebar-heading">
+            Food Management
+        </div>
+
+        {/* <!-- Nav Item - Pages Collapse Menu --> */}
+        <li className="nav-item">
+          <Link to='/add-food'>
+            <div className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i className="fas fa-fw fa-cog"></i>
+                <span>Add Food</span>
+            </div>
+            </Link>
+        </li>
+
+        {/* <!-- Nav Item - Utilities Collapse Menu --> */}
+        <li className="nav-item">
+          <Link to='/all-food'>
+              <div className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                  aria-expanded="true" aria-controls="collapseUtilities">
+                  <i className="fas fa-fw fa-wrench"></i>
+                  <span>All Food</span>
+              </div>
+            </Link>
+        </li>
+
+        <li className="nav-item">
+          <Link to='/add-food-formik'>
+              <div className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                  aria-expanded="true" aria-controls="collapseUtilities">
+                  <i className="fas fa-fw fa-wrench"></i>
+                  <span>Add Food Formik</span>
+              </div>
+            </Link>
+        </li>
+
+        {/* <!-- Divider --> */}
+        <hr className="sidebar-divider"/>
+
         </ul>
             </div>
   </>

@@ -1,9 +1,16 @@
-import React from 'react'
+import React,{useContext} from 'react'
+import {Link,Outlet} from 'react-router-dom'
+import Table from 'react-bootstrap/Table'
+import {FoodContext} from './../App';
+import Button from 'react-bootstrap/Button'
 
 function Dashboard(props) {
-    console.log(props)
+    let context = useContext(FoodContext);
     return (
         <div>
+            
+            <Link to='sample'>Sample</Link>
+            <Link to='help'>Help</Link>
             <div id="content-wrapper" className="d-flex flex-column">
                 <div id="content">       
                     <div className="container-fluid">
@@ -93,12 +100,38 @@ function Dashboard(props) {
                                 </div>
                             </div>
                         </div>
-
                         </div>
                     </div>
                 </div>
             </div>
+    
+            <Table striped bordered hover>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Cusine</th>
+      <th>Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+        context.food.map((e)=>{
+            return <tr>
+                <td>{e.name}</td>
+                <td>Rs.{e.price}</td>
+                <td>{e.cusine}</td>
+                <td>{e.rating}</td>
+                <td>{e.duration} mins</td>
+            </tr>
+        })
+    }
+  </tbody>
+</Table>
+<Outlet/>
         </div>
+        
     )
 }
 
